@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Kwestionariusz testowy</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; line-height: 1.6; }
+    h1 { font-size: 26px; color: #2c3e50; }
+    h2 { font-size: 18px; color: #555; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, textarea { width: 100%; padding: 5px; margin-top: 5px; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 20px; }
+    .hidden { display: none; color: green; font-weight: bold; margin-top: 20px; }
+  </style>
+  <script>
+    function checkIfSubmitted() {
+      if (localStorage.getItem("formSubmitted") === "true") {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("alreadySent").classList.remove("hidden");
+      }
+    }
+
+    function markAsSubmitted() {
+      localStorage.setItem("formSubmitted", "true");
+    }
+
+    window.onload = checkIfSubmitted;
+  </script>
+</head>
+<body>
+  <h1>Kwestionariusz testowy</h1>
+  <h2>Wypełnij tylko raz. Twoje odpowiedzi zostaną wysłane anonimowo na wskazany adres e-mail.</h2>
+
+  <div id="formContainer">
+    <form action="https://formsubmit.co/przemyslaw.lukasiewicz@terapiadialog.pl" method="POST" onsubmit="markAsSubmitted()">
+      <!-- Ukrycie captcha i potwierdzenie -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="Nowa odpowiedź z kwestionariusza">
+      <input type="hidden" name="_next" value="https://thankyou.page">
+
+      <label for="q1">1. Jak się dziś czujesz?</label>
+      <select name="Jak się dziś czujesz?" required>
+        <option value="">-- wybierz odpowiedź --</option>
+        <option value="Bardzo dobrze">Bardzo dobrze</option>
+        <option value="Dobrze">Dobrze</option>
+        <option value="Średnio">Średnio</option>
+        <option value="Źle">Źle</option>
+      </select>
+
+      <label for="q2">2. Czy potrzebujesz kontaktu z terapeutą?</label>
+      <select name="Czy potrzebujesz kontaktu z terapeutą?" required>
+        <option value="">-- wybierz odpowiedź --</option>
+        <option value="Tak">Tak</option>
+        <option value="Nie">Nie</option>
+        <option value="Jeszcze nie wiem">Jeszcze nie wiem</option>
+      </select>
+
+      <label for="uwagi">3. Dodatkowe uwagi (opcjonalnie)</label>
+      <textarea name="Dodatkowe uwagi" rows="4"></textarea>
+
+      <button type="submit">Wyślij</button>
+    </form>
+  </div>
+
+  <div id="alreadySent" class="hidden">
+    Formularz został już przez Ciebie wysłany. Dziękujemy!
+  </div>
+</body>
+</html>
